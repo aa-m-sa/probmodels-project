@@ -1,0 +1,29 @@
+BEANDisco 2.0 (2016-04-22)
+* lots of large architectural changes
+* some option names and/or syntax have been changed
+* score computation changes
+  - added support for more score functions: BDeu, LL, MDL, AIC
+  - changed some model defaults:
+    - default score K2 -> BDeu
+    - no more weighting scores by parentset size
+  - added support for using ADTree in score computation
+* approximate computation (by sampling)
+  - added support for computing the normalizing constant
+  - added more computation methods: AIS and MC3
+  - removed support for parallel bucket orders
+  - added (specialized) support for linear orders
+  - added support for nested DAG sampling
+  - added support for bias correction
+* exact computation
+  - added support for computing the normalizing constant
+  - removed support for space-time trading
+    (will possibly be added back at some point)
+* speed improvements
+
+BEANDisco 1.0.1 (2011-11-30)
+* Mac OS X compatibility fixes (thanks to Richard McAllister)
+* added parameter recommendations in README
+
+BEANDisco 1.0 (2011-06-23)
+* initial release
+

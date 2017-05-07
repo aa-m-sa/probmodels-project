@@ -1,0 +1,1 @@
+beand -D %INPUT%/example.dat -m 3 -T arcprobs -M mcmc --sample-type order --mcmc-burnin-steps 1000 --mcmc-sample-spacing 10 -s 100 --seed 1 --arcprobs-out-file arcprobs.txt -q

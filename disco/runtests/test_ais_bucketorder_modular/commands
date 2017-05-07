@@ -1,0 +1,1 @@
+beand -D %INPUT%/example.dat -m 3 --prior-type modular -T arcprobs,normconst -M ais --sample-type bucketorder --sample-bucket-size 3 --ais-levels 1000 --ais-target-samples 50 --ais-sample-spacing 10 -s 10 --subsamples 10 --seed 1 --arcprobs-out-file arcprobs.txt --normconst-out-file normconst.txt -q

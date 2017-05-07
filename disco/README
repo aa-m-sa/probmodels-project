@@ -1,0 +1,108 @@
+BEANDisco - Bayesian Exact and Approximate Network Discovery
+
+Copyright 2011-2016 Teppo Niinimäki <teppo.niinimaki(at)helsinki.fi>
+
+BEANDisco is a software for learning Bayesian network structure from data. See
+[1], [2], [3] and [4] for more information about the algorithms.
+
+
+Licence
+=======
+
+This software is distributed under GNU GPL. See COPYING.
+
+
+Compilation
+===========
+
+Requires a compiler that supports the C++11 standard (tested with GCC 4.8 and clang 3.4).
+
+The following libraries are also required:
+
+    boost, boost-program-options, boost-iostreams, boost-regex
+
+(tested with Boost version 1.54)
+
+Compilation:
+
+    make
+
+The above uses GCC by default. In order to compile with clang instead, use
+
+    make CXX=clang++
+
+
+Usage
+=====
+
+Usage:
+
+    ./beand [options]
+
+To see the list of available options:
+
+    ./beand --help
+
+The input data file should contain one data sample per row, each sample
+consisting of one integer value for each variable. Values on a row should be
+separated by whitespace (tabs or spaces). For an example data file with 8
+variables (columns) and 200 samples (rows) see example.dat.
+
+
+Examples
+========
+
+Estimate the posterior probabilities of all arcs with ordermodular structure
+prior, maximum in-degree of 3 and BDeu score, by sampling bucket orders using
+AIS with 2000 temperature levels for 2 seconds:
+
+    ./beand -D example.dat -m 3 -T arcprobs -M ais --ais-levels 2000 -t 2s
+
+As above, but first compute scores into a file and then use the precomputed
+scores to estimate arc probabilities:
+
+    ./beand -D example.dat -m 3 --score-out-file example.score
+    ./beand --score-in-file example.score -T arcprobs -M ais --ais-levels 2000 -t 2s
+
+As above, but use modular structure prior (automatically turns on DAG
+subsampling), and draw 1000 subsamples (DAGs) per bucket order sample:
+
+    ./beand -D example.dat -m 3 --prior-type modular -T arcprobs \
+            -M ais --ais-levels 2000 --subsamples 1000 -t 2s
+
+As above, but in two phases: first run AIS and write the bucket order samples
+into a file, then read the samples from the file and compute the estimates
+(includes subsampling):
+
+    ./beand -D example.dat -m 3 -T samples -M ais --ais-levels 2000 -t 2s \
+            --sample-out-file example_ais.samples
+    ./beand -D example.dat -m 3 --prior-type modular -T arcprobs -M mc \
+            --sample-in-file example_ais.samples --subsamples 1000
+
+Specify the data file and maximum in-degree as command line arguments and read the rest of the arguments from a configuration file:
+
+    ./beand -D example.dat -m 3 --config-file example.cfg
+
+Compute the exact posterior probabilities of arcs (with ordermodular structure
+prior, maximum in-degree of 3 and BDeu score):
+
+    ./beand -D example.dat -m 3 -T arcprobs -M exact
+
+
+
+References
+==========
+
+[1] T. Niinimäki, P. Parviainen and M. Koivisto. Structure discovery in
+Bayesian networks by sampling partial orders. JMLR, (to appear)
+
+[1] T. Niinimäki and M. Koivisto. Annealed importance sampling for structure
+searning in Bayesian networks. IJCAI 2013
+
+[3] T. Niinimäki, P. Parviainen and M. Koivisto. Partial order MCMC for
+structure discovery in Bayesian networks. UAI 2011
+
+[4] P. Parviainen and M. Koivisto. Bayesian structure discovery in Bayesian
+networks with less space. AISTATS 2010
+
+

@@ -1,0 +1,1 @@
+beand -D %INPUT%/example.dat -m 3 --prior-type modular -T arcprobs,normconst -M mc3 --sample-type order --mc3-burnin-steps 1000 --mc3-levels 3 --mc3-level-swaps 100 --mc3-sample-spacing 10 -s 100 --subsamples 10 --seed 1 --arcprobs-out-file arcprobs.txt --normconst-out-file normconst.txt -q
